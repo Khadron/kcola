@@ -1,0 +1,23 @@
+{
+    "hello": {
+        "route": "/",
+        "method": "get",
+        "ignoreauth": true
+    },
+    "testNamespace": {
+        "route": "/",
+        "method": "get",
+        "own": "monkey",
+        "ignoreauth": true
+    },
+    "chat": {
+        "own": "elephant",
+        "upgrade": "ws",
+        "ignoreauth": true
+    },
+    "receive":{
+        "own": "elephant",
+        "upgrade": "ws",
+        "ignoreauth": true
+    }
+}
