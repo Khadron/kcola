@@ -157,6 +157,22 @@ function loadModule(modulePath, rootPath) {
 
 /**
  *
+ * 判断指定路径的文件或文件夹是否存在
+ * @param {*} path
+ * @returns
+ */
+function existsSync(path) {
+  try {
+    fs.accessSync(path);
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ *
  *
  * @param {*} type
  * @returns
@@ -181,6 +197,7 @@ module.exports = {
   formatNumber,
   traverseDir,
   loadModule,
+  existsSync,
   isType,
   isObject,
   isString,

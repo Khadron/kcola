@@ -10,7 +10,7 @@ const handleRoute = require('./handleRoute');
 const handleWebSocket = require('./handleWebSocket');
 const handleSpaMode = require('./handleHistoryMode');
 const handleMiddleware = require('./handleMiddleware');
-const {traverseDir} = require('../utils');
+const {traverseDir, existsSync} = require('../utils');
 
 const defaultAppConfig = {
   route_meta_data: [],
@@ -123,21 +123,6 @@ function generateCtrlFiles(ctrlRoot) {
   return ctrlFiles;
 }
 
-/**
- *
- * 判断指定路径的文件或文件夹是否存在
- * @param {*} path
- * @returns
- */
-function existsSync(path) {
-  try {
-    fs.accessSync(path);
-  } catch (e) {
-    return false;
-  }
-
-  return true;
-}
 /**
  *
  * 检验配置文件并返回其路径
