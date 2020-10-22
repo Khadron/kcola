@@ -53,7 +53,13 @@ class App extends EventEmitter {
     handleMiddleware(config.middlewareOpts, app);
 
     const routeDir = validateConfigFile(config.routeDir, './routes');
+    if (!routeDir) {
+      throw new Error('[kcola error] "routes" directory not found, please create');
+    }
     const ctrlDir = validateConfigFile(config.controllerDir, './controllers');
+    if (!ctrlDir) {
+      throw new Error('[kcola error] "controllers" directory not found, please create');
+    }
 
     const ctrls = generateCtrlFiles(ctrlDir);
     const router = handleRoute(ctrls, {
