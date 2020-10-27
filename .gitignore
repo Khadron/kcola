@@ -109,3 +109,6 @@ dist
 # vscode
 .vscode
 
+
+# node.js
+./node_modules

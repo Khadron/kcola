@@ -1,6 +1,5 @@
+const {isObject, parseArgs} = require('../utils');
 const mime = require('../utils/mime');
-const {isObject} = require('../utils');
-const {parseArgs} = require('../utils');
 
 module.exports = (route) => {
   const Controller = route.controller;
@@ -35,7 +34,7 @@ module.exports = (route) => {
     if (reqBody) {
       if (ctx.is(mime.formData) || ctx.is(mime.stream)) {
         fields = reqBody.fields;
-        const files = reqBody.files;
+        const files = reqBody.files; // 处理文件上传参数
         for (const name in files) {
           if (!Object.prototype.hasOwnProperty.call(files, name)) {
             continue;

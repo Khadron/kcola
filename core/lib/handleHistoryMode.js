@@ -2,6 +2,11 @@ const mime = require('../utils/mime');
 const {isHtml} = require('../utils');
 const logger = console.log;
 
+const defaultConfig = {
+  rewrites: [{from: /(\/[^\/\.]+\/?)$/, to: '/'}],
+  ignores: [/^\/$/],
+};
+
 module.exports = (config) => {
   return async function intercept(ctx, next) {
     const header = ctx.req.headers;
@@ -16,6 +21,8 @@ module.exports = (config) => {
     ) {
       return next();
     }
+
+    config = config ? Object.assign(defaultConfig, config) : defaultConfig;
     let rewriteValue = '/index.html';
     for (let i = 0, il = config.ignores.length; i < il; i++) {
       const ignore = config.ignores[i];
