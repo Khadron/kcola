@@ -28,12 +28,36 @@ class Kcola extends Koa {
     global.__kcola_workdir = workDir;
     super();
     config = Object.assign(defaultConfig, config);
-    this.use(require('koa-body')({multipart: true, parsedMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']}));
-    this.use(require('koa-static')(path.join(global.__kcola_workdir, config.publicDir || './public'), {defer: true}));
-    this.use(require('koa-json')());
+    this.use(require('koa-body')({multipart: true, parsedMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']}), true);
+    this.use(
+        require('koa-static')(path.join(global.__kcola_workdir, config.publicDir || './public'), {defer: true}),
+        true
+    );
     onerror(this);
-    lib(config, this);// koa-router会影响 koa-static中间件功能，故放到最后
+    lib(config, this); // koa-router会影响 koa-static中间件功能，故放到最后
+    this.use(require('koa-json')(), true);
   }
+
+  /**
+   * 重写koa use方法
+   * 保证中间件的顺序
+   * @param {function} fn
+   * @param {boolean} [defer=false]
+   * @return {Kcola}
+   * @memberof Kcola
+   */
+  use(fn, defer = false) {
+    const copy = [].concat(this.middleware);
+    if (defer) {
+      super.use(fn);
+    } else {
+      this.middleware = [];
+      super.use(fn);
+      this.middleware = this.middleware.concat(copy);
+    }
+    return this;
+  }
+
   /**
    *
    * 加载中间件
