@@ -10,7 +10,7 @@ const handleRoute = require('./handleRoute');
 const handleWebSocket = require('./handleWebSocket');
 const handleSpaMode = require('./handleHistoryMode');
 const handleMiddleware = require('./handleMiddleware');
-const {traverseDir, existsSync} = require('../utils');
+const {traverseDir, existsSync} = require('../../utils');
 
 const defaultAppConfig = {
   route_meta_data: [],
@@ -97,7 +97,7 @@ class App extends EventEmitter {
     }
 
     if (appConfig.enable_spa_history_mode) {
-      app.middleware.unshift(handleSpaMode(appConfig.historyMode));
+      app.middleware.unshift(handleSpaMode(config.historyMode));
     }
 
     if (appConfig.enable_https) {

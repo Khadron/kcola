@@ -3,7 +3,7 @@
 const url = require('url');
 const WebSocket = require('ws');
 const EventEmitter = require('events').EventEmitter;
-const {getClientIp} = require('../utils');
+const {getClientIp} = require('../../utils');
 
 const eventEmitter = new EventEmitter();
 

@@ -1,4 +1,4 @@
-const lpc = require('../core/lpc');
+const lpc = require('../lpc');
 
 let handler = null;
 module.exports = {

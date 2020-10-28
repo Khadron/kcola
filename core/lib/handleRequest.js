@@ -1,5 +1,5 @@
-const {isObject, parseArgs} = require('../utils');
-const mime = require('../utils/mime');
+const {isObject, parseArgs} = require('../../utils');
+const mime = require('../../utils/mime');
 
 module.exports = (route) => {
   const Controller = route.controller;

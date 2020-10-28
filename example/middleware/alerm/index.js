@@ -1,5 +1,5 @@
 const path = require('path');
-const lpc = require('../../../core/lpc');
+const lpc = require('../../../lpc');
 module.exports = () => {
   const handler = lpc('Alerm', path.join(__dirname, './alert.js'));
   return async function Alerm(ctx, next) {

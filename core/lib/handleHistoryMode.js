@@ -1,5 +1,5 @@
-const mime = require('../utils/mime');
-const {isHtml} = require('../utils');
+const mime = require('../../utils/mime');
+const {isHtml} = require('../../utils');
 const logger = console.log;
 
 const defaultConfig = {

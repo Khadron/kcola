@@ -1,5 +1,5 @@
 const path = require('path');
-const {traverseDir, existsSync} = require('../utils');
+const {traverseDir, existsSync} = require('../../utils');
 
 module.exports = (opts, app) => {
   const filepath = path.join(global.__kcola_workdir, './middleware');

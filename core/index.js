@@ -28,11 +28,11 @@ class Kcola extends Koa {
     global.__kcola_workdir = workDir;
     super();
     config = Object.assign(defaultConfig, config);
-    this.use(require('koa-body')({multipart: true, strict: false}));
-    lib(config, this);
+    this.use(require('koa-body')({multipart: true, parsedMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']}));
     this.use(require('koa-static')(path.join(global.__kcola_workdir, config.publicDir || './public'), {defer: true}));
-    this.use(require('koa-json'));
+    this.use(require('koa-json')());
     onerror(this);
+    lib(config, this);// koa-router会影响 koa-static中间件功能，故放到最后
   }
   /**
    *
