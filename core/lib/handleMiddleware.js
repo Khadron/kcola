@@ -10,8 +10,16 @@ module.exports = (opts, app) => {
     entryjs.forEach((e) => {
       const dirname = path.dirname(e);
       const mwname = dirname.substring(dirname.lastIndexOf(path.sep)).replace(regex, '');
-      console.log(mwname);
-      app.use(require(e)(opts[mwname]));
+      console.log('middleware-', mwname);
+
+      try {
+        const mw = require(e)(opts[mwname]);
+        if (typeof mw === 'function') {
+          app.use(mw);
+        }
+      } catch (err) {
+        require(e)(app, opts[mwname]);
+      }
     });
   }
 };

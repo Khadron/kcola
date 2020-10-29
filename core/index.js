@@ -22,7 +22,7 @@ class Kcola extends Koa {
    *Creates an instance of Kcola.
    * @param {*} workDir 工程启动目录
    * @param {*} config
-   * @memberof Kcolaß
+   * @memberof Kcola
    */
   constructor(workDir, config = {}) {
     global.__kcola_workdir = workDir;

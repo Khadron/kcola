@@ -15,10 +15,7 @@ const {traverseDir, existsSync} = require('../../utils');
 const defaultAppConfig = {
   route_meta_data: [],
   enable_spa_history_mode: true,
-  historyMode: {
-    rewrites: [],
-    ignores: [],
-  },
+  enable_load_middleware: false,
   enable_https: false,
   certificate: {
     certPath: null,
@@ -50,7 +47,9 @@ class App extends EventEmitter {
       appConfig = require(appConfigPath);
     }
 
-    handleMiddleware(config.middlewareOpts, app);
+    if (appConfig.enable_load_middleware) {
+      handleMiddleware(config.middlewareOpts, app);
+    }
 
     const routeDir = validateConfigFile(config.routeDir, './routes');
     if (!routeDir) {
@@ -143,6 +142,11 @@ function validateConfigFile(filepath, defaultPath) {
 
   if (!path.isAbsolute(filepath)) {
     filepath = path.join(global.__kcola_workdir, filepath);
+  }
+
+  const stat = fs.statSync(filepath);
+  if (stat.isDirectory()) {
+    filepath = path.join(filepath, './index.js');
   }
 
   return existsSync(filepath) ? filepath : null;
