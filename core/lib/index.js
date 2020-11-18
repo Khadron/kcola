@@ -41,7 +41,7 @@ class App extends EventEmitter {
   constructor(config, app) {
     super();
 
-    const appConfigPath = validateConfigFile(config.appConfigPath, './app.json');
+    const appConfigPath = validateConfigFile(config.appConfigPath, './appConfig.json');
     let appConfig = defaultAppConfig;
     if (appConfigPath) {
       appConfig = require(appConfigPath);
@@ -51,11 +51,11 @@ class App extends EventEmitter {
       handleMiddleware(config.middlewareOpts, app);
     }
 
-    const routeDir = validateConfigFile(config.routeDir, './routes');
+    const routeDir = validateCoreDirectory(config.routeDir, './routes');
     if (!routeDir) {
       throw new Error('[kcola error] "routes" directory not found, please create');
     }
-    const ctrlDir = validateConfigFile(config.controllerDir, './controllers');
+    const ctrlDir = validateCoreDirectory(config.controllerDir, './controllers');
     if (!ctrlDir) {
       throw new Error('[kcola error] "controllers" directory not found, please create');
     }
@@ -150,4 +150,22 @@ function validateConfigFile(filepath, defaultPath) {
   }
 
   return existsSync(filepath) ? filepath : null;
+}
+
+/**
+ *
+ *检验框架核心目录
+ * @param {*} dir
+ * @param {*} defaultDir
+ * @returns
+ */
+function validateCoreDirectory(dir, defaultDir) {
+  if (!dir) {
+    dir = defaultDir;
+  }
+
+  if (!path.isAbsolute(dir)) {
+    dir = path.join(global.__kcola_workdir, dir);
+  }
+  return existsSync(dir) ? dir : null;
 }
