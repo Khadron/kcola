@@ -65,7 +65,7 @@ class App extends EventEmitter {
       info: appConfig.route_meta_data || appConfig.app_routes,
       dir: routeDir,
     });
-    app.use(router.routes(), true).use(router.allowedMethods(), true);
+    app.use(router.routes()).use(router.allowedMethods());
     app.routeMatcher = router.stack.map((value) => {
       return {
         regexp: value.regexp,

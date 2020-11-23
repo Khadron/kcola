@@ -39,21 +39,19 @@ class Kcola extends Koa {
   }
 
   /**
+   *
    * 重写koa use方法
    * 保证中间件的顺序
    * @param {function} fn
-   * @param {boolean} [defer=false]
+   * @param {number} pos 指定中间件的位置
    * @return {Kcola}
    * @memberof Kcola
    */
-  use(fn, defer = false) {
-    const copy = [].concat(this.middleware);
-    if (defer) {
+  use(fn, pos) {
+    if (!pos || this.middleware.length === 0 || this.middleware.length - 1 < pos) {
       super.use(fn);
     } else {
-      this.middleware = [];
-      super.use(fn);
-      this.middleware = this.middleware.concat(copy);
+      this.middleware.splice(pos, 0, fn);
     }
     return this;
   }
