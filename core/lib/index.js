@@ -47,8 +47,25 @@ class App extends EventEmitter {
       appConfig = require(appConfigPath);
     }
 
+    if (appConfig.enable_https) {
+      const enforceHttps = require('koa-sslify');
+      app.use(enforceHttps(), 'koa-sslify');
+    }
+
+    if (appConfig.enable_spa_history_mode) {
+      app.use(handleSpaMode(config.historyMode), 'spa');
+    }
+    app.use(
+        require('koa-static')(path.join(global.__kcola_workdir, config.publicDir || './public'), {defer: true}),
+        'koa-static'
+    );
+    app.use(
+        require('koa-body')({multipart: true, parsedMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']}),
+        'koa-body'
+    );
+
     if (appConfig.enable_load_middleware) {
-      handleMiddleware(config.middlewareOpts, app);
+      handleMiddleware(config.middlewareOpts, app, 4);
     }
 
     const routeDir = validateCoreDirectory(config.routeDir, './routes');
@@ -65,7 +82,7 @@ class App extends EventEmitter {
       info: appConfig.route_meta_data || appConfig.app_routes,
       dir: routeDir,
     });
-    app.use(router.routes()).use(router.allowedMethods());
+    app.use(router.routes(), 'koa-router').use(router.allowedMethods(), 'koa-router-allowed-methods');
     app.routeMatcher = router.stack.map((value) => {
       return {
         regexp: value.regexp,
@@ -86,23 +103,15 @@ class App extends EventEmitter {
     } else {
       server = http.createServer(app.callback());
     }
-    app.listen = function listen(...args) {
-      server.listen.apply(server, args);
-      return server;
-    };
 
     if (appConfig.enable_websocket) {
       handleWebSocket(server, router.wsRouter);
     }
 
-    if (appConfig.enable_spa_history_mode) {
-      app.middleware.unshift(handleSpaMode(config.historyMode));
-    }
-
-    if (appConfig.enable_https) {
-      const enforceHttps = require('koa-sslify');
-      app.middleware.unshift(enforceHttps());
-    }
+    app.listen = function listen(...args) {
+      server.listen.apply(server, args);
+      return server;
+    };
 
     app.server = server;
   }

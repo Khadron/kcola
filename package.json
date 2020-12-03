@@ -1,6 +1,6 @@
 {
     "name": "kcola",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "一个基于koa2，小而美的RESTful API+MVC的web开发框架！",
     "main": "./core/index.js",
     "scripts": {
@@ -24,6 +24,7 @@
     "dependencies": {
         "@koa/router": "^8.0.0",
         "ejs": "^3.1.5",
+        "is-generator-function": "^1.0.7",
         "koa": "^2.5.0",
         "koa-body": "^4.1.1",
         "koa-bodyparser": "^2.5.0",

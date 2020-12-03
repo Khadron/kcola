@@ -149,7 +149,7 @@ module.exports = (ctrlFiles, config) => {
     Object.keys(routerSet).forEach((key) => {
       const curRouter = routerSet[key];
       if (!curRouter.upgrade) {
-        mainRouter.use('/', curRouter.routes(), curRouter.allowedMethods());
+        mainRouter.use('/', curRouter.routes()).use(curRouter.allowedMethods());
       }
     });
 
