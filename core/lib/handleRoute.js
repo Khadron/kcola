@@ -57,7 +57,7 @@ function formatRoute(cfg, defaultRoute) {
   } else {
     if (cfg.pathname) {
       // 默认把controller.js文件名作为路由的一部分
-      url = `/${url.replace(/^\/|\/$/g, '')}/${cfg.pathname.replace(/^\/|\/$/g, '')}`;
+      url = `${safeUriFormat(url)}/${safeUriFormat(cfg.pathname)}`;
     }
   }
   return url;
@@ -69,9 +69,12 @@ function formatRoute(cfg, defaultRoute) {
  * @returns
  */
 function createRouter(routes) {
-  const result = {};
+  const router = {};
   routes.forEach((route) => {
-    if (!result[route.namespace]) {
+    if (!route.namespace) {
+      throw new Error('Found invalid "namespace" value, please check "appConfig.json" ');
+    }
+    if (!router[route.namespace]) {
       let pathname = route.namespace || '';
       if (route.prefix) {
         pathname += '/' + route.prefix.replace(/^\/*/, '');
@@ -79,8 +82,9 @@ function createRouter(routes) {
       if (route.version) {
         pathname += '/' + route.version;
       }
+      pathname = safeUriFormat(pathname, 'all');
       if (route.upgrade) {
-        result[route.namespace] = {
+        router[route.namespace] = {
           name: route.namespace,
           upgrade: route.upgrade,
           opts: {
@@ -89,14 +93,37 @@ function createRouter(routes) {
         };
         Object.assign(route, {pathname});
       } else {
-        result[route.namespace] = Router({
+        router[route.namespace] = Router({
           name: route.namespace,
           prefix: pathname,
         });
       }
     }
   });
-  return result;
+  return router;
+}
+/**
+ *
+ * 安全地格式化Uri
+ * @param {string} uri
+ * @param {string} formatType
+ * @returns {string}
+ */
+function safeUriFormat(uri, formatType) {
+  if (!uri) {
+    return uri;
+  }
+
+  switch (formatType) {
+    case 'head':
+      return `/${uri.replace(/^\/|\/$/g, '')}`;
+    case 'tail':
+      return `${uri.replace(/^\/|\/$/g, '')}/`;
+    case 'all':
+      return `/${uri.replace(/^\/|\/$/g, '')}/`;
+    default:
+      return uri.replace(/^\/|\/$/g, '');
+  }
 }
 
 module.exports = (ctrlFiles, config) => {
@@ -123,11 +150,11 @@ module.exports = (ctrlFiles, config) => {
           method,
           `${(curRouter && curRouter.opts.prefix) || ''}${routeInfo.url}`,
           'auth:',
-          routeInfo.ignoreauth ? 'no' : 'yes'
+        routeInfo.ignoreauth ? 'no' : 'yes'
       );
       if (curRouter) {
         if (curRouter.upgrade && curRouter.upgrade === 'ws') {
-          const wsPath = `/${curRouter.opts.prefix.replace(/^\/|\/$/g, '')}/`;
+          const wsPath = safeUriFormat(curRouter.opts.prefix, 'all');
           if (!mainRouter.wsRouter[wsPath]) {
             mainRouter.wsRouter[wsPath] = {};
           }
