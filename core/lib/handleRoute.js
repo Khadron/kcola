@@ -112,18 +112,18 @@ module.exports = (ctrlFiles, config) => {
     console.log('=== route info: ===');
     const ignores = {};
     mainRouter.wsRouter = {};
-    for (const route of routeInfos) {
-      const own = route.own ? route.own.toLowerCase() : 'main';
-      const method = route.method ? route.method.toLowerCase() : '';
+    for (const routeInfo of routeInfos) {
+      const own = routeInfo.own ? routeInfo.own.toLowerCase() : 'main';
+      const method = routeInfo.method ? routeInfo.method.toLowerCase() : '';
       const curRouter = routerSet[own];
       console.log(
           '* ',
           'own ->',
           own || 'main',
           method,
-          `${(curRouter && curRouter.opts.prefix) || ''}${route.url}`,
+          `${(curRouter && curRouter.opts.prefix) || ''}${routeInfo.url}`,
           'auth:',
-        route.ignoreauth ? 'no' : 'yes'
+          routeInfo.ignoreauth ? 'no' : 'yes'
       );
       if (curRouter) {
         if (curRouter.upgrade && curRouter.upgrade === 'ws') {
@@ -131,17 +131,17 @@ module.exports = (ctrlFiles, config) => {
           if (!mainRouter.wsRouter[wsPath]) {
             mainRouter.wsRouter[wsPath] = {};
           }
-          mainRouter.wsRouter[wsPath][route.action] = new route.controller()[route.action];
+          mainRouter.wsRouter[wsPath][routeInfo.action] = new routeInfo.controller()[routeInfo.action];
         } else {
-          curRouter[method](route.action, route.url, handleRequest(route));
+          curRouter[method](routeInfo.action, routeInfo.url, handleRequest(routeInfo));
         }
       } else {
-        mainRouter[method](route.action, route.url, handleRequest(route));
+        mainRouter[method](routeInfo.action, routeInfo.url, handleRequest(routeInfo));
       }
 
-      ignores[route.action] = {
-        ignore: route.ignoreauth,
-        method: route.method === 'del' ? 'delete' : route.method,
+      ignores[routeInfo.action] = {
+        ignore: routeInfo.ignoreauth,
+        method: routeInfo.method === 'del' ? 'delete' : routeInfo.method,
       };
     }
     console.log('===');
@@ -149,7 +149,7 @@ module.exports = (ctrlFiles, config) => {
     Object.keys(routerSet).forEach((key) => {
       const curRouter = routerSet[key];
       if (!curRouter.upgrade) {
-        mainRouter.use('/', curRouter.routes()).use(curRouter.allowedMethods());
+        mainRouter.use(curRouter.routes());
       }
     });
 
