@@ -123,12 +123,12 @@
           JSON.stringify({
             action: "receive",
             data: document.getElementById("content").value,
-          }),
+          },
           function (data) {
             console.log(data);
             document.getElementById("content").value = "";
             alert("发送成功,");
-          }
+          })
         );
       }
     </script>

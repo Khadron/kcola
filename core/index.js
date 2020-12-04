@@ -114,8 +114,7 @@ class Kcola extends Koa {
     this.middleware.splice(pos, 0, fn);
     fn['mwname'] = mwname || `mw-${pos}`;
 
-    console.log(this.mwScope);
-    console.log(this.middleware.map((mw) => mw.mwname));
+    console.log('middleware record:', this.middleware.map((mw) => mw.mwname));
     return this;
   }
 

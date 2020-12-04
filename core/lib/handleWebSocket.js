@@ -53,7 +53,7 @@ function createWSServer(actions) {
   const wss = new WebSocket.Server({noServer: true}); // 创建完全与HTTP服务器分离的Websocket服务器
   wss.on('connection', (ws, request) => {
     const ip = getClientIp(request);
-    console.log('[kcola websocket server] 连接成功-', ip, request);
+    console.log('[kcola websocket server] 连接成功-', ip, request.url);
 
     ws.on('message', (packet) => {
       console.log('[kcola websocket server] packet:', packet);
