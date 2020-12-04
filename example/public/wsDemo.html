@@ -119,17 +119,13 @@
         console.log("Connection closed.");
       };
       function sendMessage() {
-        ws.send(
-          JSON.stringify({
-            action: "receive",
-            data: document.getElementById("content").value,
-          },
-          function (data) {
-            console.log(data);
-            document.getElementById("content").value = "";
-            alert("发送成功,");
-          })
-        );
+        const json = {
+          action: "receive",
+          data: document.getElementById("content").value,
+        };
+        ws.send(JSON.stringify(json));
+        document.getElementById("content").value = "";
+        alert("发送成功,");
       }
     </script>
   </body>
