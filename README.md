@@ -161,7 +161,7 @@ app.listen(9527, function (err) {
 
 ### .use(fn, pos)
 
-`koa`中的 <a id="use" href="#">use</a> 方法无法指定中间点调用的顺序，由于中间的的调用`next()`方法位置及时机不同会产生不同的影响，因此 kcola 重写了`use`方法，多了一个`pos`用来指定中间件执行的位置
+`koa`中的 <a id="use" href="#">use</a> 方法无法指定中间点调用的顺序，由于中间的的调用`next()`方法位置及时机不同会产生不同的影响，因此 kcola 重写了`use`方法，多了一个`pos`参数用来指定中间件执行的位置
 
 ```js
 
