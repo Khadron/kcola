@@ -119,7 +119,7 @@ const app = new App(__dirname, "config.js文件绝对路径");
 
 `kcola`约定 router 配置文件为`json`格式的文件，放到`routeDir`指定的目录中
 
-配置文件中对象的`key`为`controller`类中的方法名称（这里成为action），`value`为路由的描述信息
+配置文件中对象的`key`为`controller`类中的方法名称（这里称为action），`value`为路由的描述信息
 
 下面是 router 配置项的说明
 
