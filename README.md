@@ -5,6 +5,8 @@
 
 支持`websocket`和多进程等特性
 
+`kcola`设计的非常灵活，你除了直接使用[kcola-mvc](https://github.com/Khadron/kcola-mvc)项目外，也可以根据自身的应用场景实现属于自己的最佳实现
+
 ## 设计思想
 - 约定大于配置
 - 精简而优美
@@ -134,7 +136,8 @@ app.use(function mw3(){},3);
 app.use(function mw1{},1); // mw1会在mw3前执行
 ```
 
-
+### 更多
+更多的用法，请参考`kcola`最佳实践[kcola-mvc](https://github.com/Khadron/kcola-mvc)
 
 ## 更新日志
 
