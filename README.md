@@ -1,6 +1,7 @@
 # kcola
 
 ## 简介
+
 `kcola` 一个基于`koa2`，小而美的`RESTful API` + `MVC`的 Web 开发框架！
 
 支持`websocket`和多进程等特性
@@ -8,38 +9,46 @@
 `kcola`设计的非常灵活，你除了直接使用[kcola-mvc](https://github.com/Khadron/kcola-mvc)项目外，也可以根据自身的应用场景实现属于自己的最佳实现
 
 ## 设计思想
+
 - 约定大于配置
 - 精简而优美
 - 轻量可扩展
 - 追求优雅实现
 
 ## 特性
+
 - route 与 controller 自动映射
 - controller 方法参数自动解析
 - 支持多进程(LPC)
 - 支持多层路由(web,Api,websocket)
 
 ## LPC 概念
+
 LPC（本地进程间通信）是 IPC（进程间通信）概念的延伸，它抽象出 Node.js 中多进程操作，使其以统一的方式展现给开发人员，从而对开发人员更加友好
 
 ## 中间件
+
 kcola 会自动加载 `约定`目录（`/middleware`）下的自定义的 Koa 中间件，当然你也可以在应用中自己添加
 解决了中间件顺序不可控的难题，具体请查看 [.use(fn, pos)](#use)</a>
 
 ## 稳定版本
+
 **v1.1.5**
 
 ## 运行环境
+
 node version >=8.94
 
 koa >=2.0
 
 ## 安装
+
 ```shell
 npm i kcola -S
 ```
 
 ## 如何使用
+
 ### appConfig.json
 
 `appConfig.json` 是框架级别的配置文件，指定框架基础设施功能
@@ -82,6 +91,7 @@ npm i kcola -S
 比如：指定搜索 `routeDir` 和 `controllerDir` 的目录、middlewareOpts 指定项目中要加载的中间件的参数信息等
 
 在 kcola 类实例化时指定其路径
+
 ```js
 const app = new App(__dirname, "config.js文件绝对路径");
 ```
@@ -105,31 +115,54 @@ const app = new App(__dirname, "config.js文件绝对路径");
 };
 ```
 
-### Kcola类
-`Kcola` 是框架的启动的入口类，也是最为核心的一个类， `Kcola`实例化后会生成一个http/https/websocket服务器
+### 配置 router
+
+`kcola`约定 router 配置文件为`json`格式的文件，放到`routeDir`指定的目录中
+
+配置文件中对象的`key`为`controller`类中的方法名称（这里成为action），`value`为路由的描述信息
+
+下面是 router 配置项的说明
+
+```json
+{
+  "action name": {
+    "route": "/", // 路由 eg:/api/token
+    //"pathname":"" // 也是指定路由，与‘route’不用的是pathname会在路由中自动添加上controller文件的name。eg:/api/home/token
+    "method": "get", // 请求的方法类型
+    "own": "monkey", // 指定该路由属于哪个子系统的，与‘appConfig.json’文件中‘route_meta_data’对象的‘namespace’的值对应
+    "ignoreauth": true // 是否跳过系统安全校验
+  }
+}
+```
+
+### Kcola 类
+
+`Kcola` 是框架的启动的入口类，也是最为核心的一个类， `Kcola`实例化后会生成一个 http/https/websocket 服务器
 
 它有两个参数：
 
 `workDir`：工程启动目录，一般都是项目启动文件（index.js）所在目录
 
-`config`: config.js所在路径
+`config`: config.js 所在路径
 
 ```js
 const Kcola = require("kcola");
 const app = new Kcola(__dirname, config);
-app.listen(9527, function(err) {
+app.listen(9527, function (err) {
   if (err) {
     console.dir(err);
     return;
   }
   console.log(`===========Listening at localhost:${port}==============`);
-  console.log(`http://localhost:${port}/`)
-  console.log('===========')
+  console.log(`http://localhost:${port}/`);
+  console.log("===========");
 });
 ```
 
 ### .use(fn, pos)
-`koa`中的 <a id="use" href="#">use</a> 方法无法指定中间点调用的顺序，由于中间的的调用`next()`方法位置及时机不同会产生不同的影响，因此kcola重写了`use`方法，多了一个`pos`用来指定中间件执行的位置
+
+`koa`中的 <a id="use" href="#">use</a> 方法无法指定中间点调用的顺序，由于中间的的调用`next()`方法位置及时机不同会产生不同的影响，因此 kcola 重写了`use`方法，多了一个`pos`用来指定中间件执行的位置
+
 ```js
 
 app.use(function mw3(){},3);
@@ -137,6 +170,7 @@ app.use(function mw1{},1); // mw1会在mw3前执行
 ```
 
 ### 更多
+
 更多的用法，请参考`kcola`最佳实践[kcola-mvc](https://github.com/Khadron/kcola-mvc)
 
 ## 更新日志
