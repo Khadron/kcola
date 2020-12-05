@@ -123,7 +123,7 @@ const app = new App(__dirname, "config.js文件绝对路径");
 
 下面是 router 配置项的说明
 
-```json
+```js
 {
   "action name": {
     "route": "/", // 路由 eg:/api/token
