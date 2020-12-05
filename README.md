@@ -58,7 +58,7 @@ npm i kcola -S
 下面是配置项说明：
 
 ```js
-
+{
   "route_meta_data":  // route_meta_data 路由的元数据配置
   [
         {
@@ -71,17 +71,17 @@ npm i kcola -S
             "prefix": "cola",
             "upgrade": "ws"
         }
-    ],
-    "enable_spa_history_mode": false, // 是否启用‘单页面’模式，启用后所有的get请求都会返回 ‘index.html’内容，可以在‘config’中设置要忽略的请求，比如‘/api’前缀的请求
-    "enable_websocket": true,
-    "enable_load_middleware": true, // 是否启用自动加载中间件，开启时框架会自动扫描工程目录下的‘middleware’文件夹病加载对应的中间件，中间件的参数可在‘config’中用middlewareOpts来设置
-    "max_pool_size": 16, // 设置libuv线程池中的线程数大小
-    "enable_https": false, // 是否开启https请求，与‘certificate’一起使用
-    "certificate": {
-        "certPath": null, // 证书文件绝对路径
-        "keyPath": null // 私钥文件绝对路径
-    }
-
+  ],
+  "enable_spa_history_mode": false, // 是否启用‘单页面’模式，启用后所有的get请求都会返回 ‘index.html’内容，可以在‘config’中设置要忽略的请求，比如‘/api’前缀的请求
+  "enable_websocket": true,
+  "enable_load_middleware": true, // 是否启用自动加载中间件，开启时框架会自动扫描工程目录下的‘middleware’文件夹病加载对应的中间件，中间件的参数可在‘config’中用middlewareOpts来设置
+  "max_pool_size": 16, // 设置libuv线程池中的线程数大小
+  "enable_https": false, // 是否开启https请求，与‘certificate’一起使用
+  "certificate": {
+    "certPath": null, // 证书文件绝对路径
+    "keyPath": null // 私钥文件绝对路径
+  }
+}
 ```
 
 ### config.js
@@ -119,7 +119,7 @@ const app = new App(__dirname, "config.js文件绝对路径");
 
 `kcola`约定 router 配置文件为`json`格式的文件，放到`routeDir`指定的目录中
 
-配置文件中对象的`key`为`controller`类中的方法名称（这里称为action），`value`为路由的描述信息
+配置文件中对象的`key`为`controller`类中的方法名称（这里称为 action），`value`为路由的描述信息
 
 下面是 router 配置项的说明
 
