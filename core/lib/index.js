@@ -47,8 +47,6 @@ class App extends EventEmitter {
       appConfig = require(appConfigPath);
     }
 
-    process.env.UV_THREADPOOL_SIZE = appConfig.max_pool_size; // 设置libuv线程池线程数大小
-
     if (appConfig.enable_https) {
       const enforceHttps = require('koa-sslify');
       app.use(enforceHttps(), 'koa-sslify');
