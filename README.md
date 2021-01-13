@@ -175,6 +175,5 @@ app.use(function mw1{},1); // mw1会在mw3前执行
 
 ## 更新日志
 
-**v1.1.5**
-
-**[milestone]** 第一个稳定版本
+**v1.1.6** : update REAMDME
+**v1.1.5** : **[milestone]** 第一个稳定版本
