@@ -1,6 +1,6 @@
 {
     "name": "kcola",
-    "version": "1.1.7",
+    "version": "1.2.0",
     "description": "一个基于koa2，小而美的RESTful API+MVC的web开发框架！",
     "main": "./core/index.js",
     "scripts": {
