@@ -51,7 +51,7 @@ npm i kcola -S
 
 ### appConfig
 
-`appConfig` 是框架级别的配置文件，指定框架基础设施功能，**约定在工作目录下`package.json`文件中配置**
+`appConfig` 是框架级别的配置，指定框架基础设施功能，**约定在工作目录下`package.json`文件中配置**
 
 比如：是否启用 `websocket` 、设置 libuv 线程池中的线程数、启用单页面功能等配置
 
@@ -176,9 +176,9 @@ app.use(function mw1{},1); // mw1会在mw3前执行
 ## 更新日志
 
 **v1.2.0** : 
-    1.去除“appConfig.json”文件，框架级别配置移到package.json文件`appConfig`属性中
-    2.优化LPC，增加`disconnect`方法
-    3.完善example
+1.去除“appConfig.json”文件，框架级别配置移到package.json文件`appConfig`属性中
+2.优化LPC，增加`disconnect`方法
+3.完善example
 
 **v1.1.6** : update REAMDME  
 
