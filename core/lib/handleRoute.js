@@ -72,7 +72,7 @@ function createRouter(routes) {
   const router = {};
   routes.forEach((route) => {
     if (!route.namespace) {
-      throw new Error('Found invalid "namespace" value, please check "appConfig.json" ');
+      route.namespace = 'kcola';
     }
     if (!router[route.namespace]) {
       let pathname = route.namespace || '';

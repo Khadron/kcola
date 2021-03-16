@@ -1,6 +1,6 @@
 {
     "name": "kcola",
-    "version": "1.1.6",
+    "version": "1.1.7",
     "description": "一个基于koa2，小而美的RESTful API+MVC的web开发框架！",
     "main": "./core/index.js",
     "scripts": {
@@ -84,5 +84,28 @@
     ],
     "engines": {
         "node": ">=11.0.0"
+    },
+    "appConfig": {
+        "route_meta_data": [
+            {
+                "namespace": "monkey",
+                "prefix": "api",
+                "version": "v1"
+            },
+            {
+                "namespace": "elephant",
+                "prefix": "cola",
+                "upgrade": "ws"
+            }
+        ],
+        "enable_spa_history_mode": false,
+        "enable_https": false,
+        "enable_websocket": true,
+        "enable_load_middleware": true,
+        "max_pool_size": 16,
+        "certificate": {
+            "certPath": null,
+            "keyPath": null
+        }
     }
 }

@@ -49,16 +49,17 @@ npm i kcola -S
 
 ## 如何使用
 
-### appConfig.json
+### appConfig
 
-`appConfig.json` 是框架级别的配置文件，指定框架基础设施功能
+`appConfig` 是框架级别的配置文件，指定框架基础设施功能，**约定在工作目录下`package.json`文件中配置**
 
 比如：是否启用 `websocket` 、设置 libuv 线程池中的线程数、启用单页面功能等配置
 
 下面是配置项说明：
 
-```js
-{
+```json
+// package.json文件
+"appConfig":{
   "route_meta_data":  // route_meta_data 路由的元数据配置
   [
         {
@@ -108,7 +109,6 @@ const app = new App(__dirname, "config.js文件绝对路径");
     rewrites: [], // url重写，默认全部重写到网站根目录
     ignores: [/^\/$/, /\/token/, /\/download\/*/, /\/exports\/*/], // 忽略要重写的路径
   },
-  appConfigPath: "./appConfig.json", // 指定搜索‘appConfig.json’文件的路径
   routeDir: "./route_config", // 指定搜索‘router‘配置文件目录
   controllerDir: "./controller", // 指定搜索‘controller’文件目录
   middlewareOpts: {'koa-proxy':{url:''}}, // 指定项目中自定义的中间件所使用的参数，key为中间件目录的名称，如‘middleware’文件夹中的‘koa-proxy’文件或‘koa-proxy’文件夹
@@ -175,5 +175,11 @@ app.use(function mw1{},1); // mw1会在mw3前执行
 
 ## 更新日志
 
-**v1.1.6** : update REAMDME
-**v1.1.5** : **[milestone]** 第一个稳定版本
+**v1.2.0** : 
+    1.去除“appConfig.json”文件，框架级别配置移到package.json文件`appConfig`属性中
+    2.优化LPC，增加`disconnect`方法
+    3.完善example
+
+**v1.1.6** : update REAMDME  
+
+**v1.1.5** : **[milestone]** 第一个稳定版本  

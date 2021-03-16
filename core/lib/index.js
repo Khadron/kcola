@@ -41,12 +41,7 @@ class App extends EventEmitter {
   constructor(config, app) {
     super();
 
-    const appConfigPath = validateConfigFile(config.appConfigPath, './appConfig.json');
-    let appConfig = defaultAppConfig;
-    if (appConfigPath) {
-      appConfig = require(appConfigPath);
-    }
-
+    const appConfig = require(path.join(process.cwd(), './package.json')).appConfig || defaultAppConfig;
     process.env.UV_THREADPOOL_SIZE = appConfig.max_pool_size; // 设置libuv线程池线程数大小
 
     if (appConfig.enable_https) {
