@@ -57,7 +57,12 @@ class App extends EventEmitter {
         'koa-static'
     );
     app.use(
-        require('koa-body')({multipart: true, parsedMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']}),
+        require('koa-body')({
+          formLimit: '55mb',
+          jsonLimit: '10mb',
+          textLimit: '10mb',
+          multipart: true,
+          parsedMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']}),
         'koa-body'
     );
 

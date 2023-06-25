@@ -7,7 +7,7 @@
         "demo": "node ./example/app.js",
         "test": "nyc mocha ./test",
         "lint": "eslint .",
-        "lint-fix": "npm run lint -- --fix",
+        "lint-fix": "npm run lint --fix",
         "pretest": "npm run lint"
     },
     "author": "khadron <khadron@163.com> (http://khadron.com)",
