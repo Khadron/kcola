@@ -10,6 +10,7 @@ const handleRoute = require('./handleRoute');
 const handleWebSocket = require('./handleWebSocket');
 const handleSpaMode = require('./handleHistoryMode');
 const handleMiddleware = require('./handleMiddleware');
+const handleReponse = require('./handleResponse');
 const {traverseDir, existsSync} = require('../../utils');
 
 const defaultAppConfig = {
@@ -69,6 +70,8 @@ class App extends EventEmitter {
     if (appConfig.enable_load_middleware) {
       handleMiddleware(config.middlewareOpts, app, 4);
     }
+
+    app.use(handleReponse(config.formatResult || {}));
 
     const routeDir = validateCoreDirectory(config.routeDir, './routes');
     if (!routeDir) {
